@@ -1,0 +1,47 @@
+package com.challenge.volcano.island.model;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = "customers")
+@Getter
+@Setter
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_generator")
+    @SequenceGenerator(name="client_generator", sequenceName = "client_seq", initialValue = 100, allocationSize = 1)
+    private Long id;
+    @Email
+    private String email;
+    @NotNull
+    @Size(max=50)
+    @Column(name = "first_name")
+    private String firstName;
+    @Size(max=50)
+    @Column(name = "last_name")
+    private String lastName;
+    @Size(max=20)
+    @Column(name = "ident_type")
+    private String identificationType;
+    @Size(max=20)
+    @Column(name = "ident_number")
+    private String identificationNum;
+    @Size(max=100)
+    private String address;
+    @Size(max=50)
+    private String city;
+    @Size(max=50)
+    private String country;
+    @Size(max=50)
+    private String state;
+    @Size(max=15)
+    private String zip;
+    @Size(max=20)
+    private String phone;
+}

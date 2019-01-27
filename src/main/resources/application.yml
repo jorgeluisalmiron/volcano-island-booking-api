@@ -1,0 +1,33 @@
+spring:
+  jpa:
+    database-platform: "org.hibernate.dialect.H2Dialect"
+    show-sql: true
+    hibernate:
+      ddl-auto: "update"
+      naming-strategy: "org.hibernate.cfg.ImprovedNamingStrategy"
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url:  "jdbc:h2:mem:volcano"
+    driverClassName: "org.h2.Driver"
+    username: "sa"
+    password: ""
+    initialization-mode: "always"
+
+volcano:
+  default:
+    max-persons-per-day: 10
+    availabilities-max-days: 30
+    persons-per-booking:
+      min: 1
+      max: 10
+  jobs:
+    update-and-syncronize:
+      cron: "1 * 0 * * ?"
+  about:
+    title: "Volcano Island Booking API"
+    description: "Back-end Tech Challenge"
+    version: "1.0"
+    name: "Jorge Luis Almiron"
+    email: "jorgeluisalmiron@gmail.com"

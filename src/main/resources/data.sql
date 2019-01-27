@@ -6,14 +6,14 @@ INSERT INTO `rules`(`name`,`min`,`max`) values ('PERSONS_PER_BOOKING_RULE',1,10)
 
 --sample data
 INSERT INTO `customers`
-(`id`,`address`,`city`,`country`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`,`phone`,`state`,`zip`)
-VALUES (1,'Mariano Moreno 2','Tres Algarrobos','Argentina','george_from_cuenca@testmail.com','Jorge','DNI','1111111XX','Almiron','12122121','Buenos Aires','6231');
+(`id`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`)
+VALUES (1,'george_from_cuenca@testmail.com','Jorge','DNI','1111111XX','Almiron');
 INSERT INTO `customers`
-(`id`,`address`,`city`,`country`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`,`phone`,`state`,`zip`)
-VALUES (2,'Olivier 5','Tandil','Argentina','luislorenzoni@testmail.com','Luis','DNI','1111111XX','Lorenzoni','12122121','Buenos Aires','7000');
+(`id`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`)
+VALUES (2,'luislorenzoni@testmail.com','Luis','DNI','1111111XX','Lorenzoni');
 INSERT INTO `customers`
-(`id`,`address`,`city`,`country`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`,`phone`,`state`,`zip`)
-VALUES (3,'Olivier 5','Tandil','Argentina','luciobb@testmail.com','Lucio','DNI','1111111XX','Gastal','12122121','Buenos Aires','7000');
+(`id`,`email`,`first_name`,`ident_number`,`ident_type`,`last_name`)
+VALUES (3,'luciobb@testmail.com','Lucio','DNI','1111111XX','Gastal');
 
 INSERT INTO `bookings`(`id`,`arrival_on`,`departure_on`,`qty_persons`,`client_id`,`status`) VALUES (1, '2019-01-30','2019-02-01',2,1,'booked');
 INSERT INTO `dates_by_booking` (`id`, `date`, `booking_id`) VALUES (1,'2019-01-30',1);

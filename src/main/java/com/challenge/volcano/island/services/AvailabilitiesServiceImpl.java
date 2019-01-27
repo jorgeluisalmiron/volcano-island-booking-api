@@ -41,12 +41,25 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
 
     @Override
     public AvailabilitiesResponse getAvailabilities(LocalDate from, LocalDate to) throws CustomException {
+        Map<LocalDate, Integer> responseMap;
+        if (Objects.isNull(from) && Objects.isNull(to)) {
+            responseMap = getAvailabilitiesCache();
 
-        queryRulesService.execute(from,to);
-        Map<LocalDate, Integer> responseMap = performGetAvailabilities(from, to);
+        } else {
+            if (Objects.isNull(from)) {
+                from = LocalDate.now().plus(1, ChronoUnit.DAYS);
+            }
+            if (Objects.isNull(to)) {
+                to = LocalDate.now().plus(availabilitiesMaxDays, ChronoUnit.DAYS);
+            }
+
+            queryRulesService.execute(from, to);
+            responseMap = performGetAvailabilities(from, to);
+        }
         AvailabilitiesResponse availabilitiesResponse = new AvailabilitiesResponse();
         availabilitiesResponse.setAvailabilities(responseMap);
         return availabilitiesResponse;
+
     }
 
     public Map<LocalDate, Integer> performGetAvailabilities(LocalDate from, LocalDate to) {
@@ -55,13 +68,6 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
         return this.getAvailabilitiesCache().entrySet().stream()
                 .filter(m-> m.getKey().isAfter(limit1) && m.getKey().isBefore(limit2))
                 .collect(Collectors.toMap(x -> x.getKey(), x->x.getValue()));
-    }
-
-    @Override
-    public AvailabilitiesResponse getAvailabilities() {
-        AvailabilitiesResponse availabilitiesResponse = new AvailabilitiesResponse();
-        availabilitiesResponse.setAvailabilities(getAvailabilitiesCache());
-        return availabilitiesResponse;
     }
 
     @Override

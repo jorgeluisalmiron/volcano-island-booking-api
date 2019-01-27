@@ -13,6 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.Collections;
+import java.util.Optional;
 
 
 @Configuration
@@ -38,6 +39,7 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
+                .genericModelSubstitutes(Optional.class)
                 .apiInfo(apiInfo());
     }
 

@@ -17,13 +17,8 @@ public interface CustomerMapper {
             @Mapping(source = "lastName", target = "lastName"),
             @Mapping(source = "identificationType", target = "identificationType"),
             @Mapping(source = "identificationNum", target = "identificationNum"),
-            @Mapping(source = "address", target = "address"),
-            @Mapping(source = "city", target = "city"),
-            @Mapping(source = "country", target = "country"),
-            @Mapping(source = "state", target = "state"),
-            @Mapping(source = "zip", target = "zip"),
-            @Mapping(source = "email", target = "email"),
-            @Mapping(source = "phone", target = "phone")
+            @Mapping(source = "email", target = "email")
+
 
     })
     Customer personalInformationToCustomer(PersonalInformation personalInformation);

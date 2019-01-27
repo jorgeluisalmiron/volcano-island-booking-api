@@ -28,22 +28,11 @@ public class AvailabilitiesController {
     @Autowired
     private AvailabilitiesService availabilitiesService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "Get Availabilities for next 30 days")
-    public ResponseEntity<Object> getAvailabilities(){
-        try{
-            AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities();
-            return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
-        }
-        catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("1","Error " + e.getMessage()));
-        }
-    }
 
-    @RequestMapping(value = "/by-range", method = RequestMethod.GET, params = { "from", "to" })
-    @ApiOperation(value = "Get Availabilities for a range within 30 days")
-    public ResponseEntity<Object> getAvailabilitiesByRange(@RequestParam(value = "from") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                                           @RequestParam(value = "to")  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "Get Availabilities for a range within the next 30 days")
+    public ResponseEntity<Object> getAvailabilitiesByRange(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                           @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
         try{
              AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
              return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
@@ -52,7 +41,7 @@ public class AvailabilitiesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getCode(),e.getMessage()));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("1","Error " + e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("500", e.getMessage()));
         }
     }
 

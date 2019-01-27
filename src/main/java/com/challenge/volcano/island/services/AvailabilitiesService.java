@@ -10,7 +10,6 @@ import java.util.Map;
 
 public interface AvailabilitiesService {
     AvailabilitiesResponse getAvailabilities(LocalDate from, LocalDate to) throws CustomException;
-    AvailabilitiesResponse getAvailabilities();
     Map<LocalDate, Integer> getAvailabilitiesCache();
     boolean changeAvailabilities(List<ChangeAvailabilities> changeAvailabilitiesList);
     boolean checkAvailabilities(LocalDate arrivalOn, long days, int qtyPersons);

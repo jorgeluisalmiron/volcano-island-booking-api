@@ -26,8 +26,7 @@ Once the application is running, you can enter to **http://localhost:8080/swagge
 In swagger you can find the implemented services divided in two controllers, availabilities-controller and booking-controller.
 
 * availabilities-controller contains the operations related to get availabilities for Volcano Island
-  * GET /api/availabilities (Get Availabilities for next 30 days)
-  * GET /api/availabilities/by-range (Get Availabilities for a range within 30 days)
+  * GET /api/availabilities (Get Availabilities for a range within the next 30 days)
 
 * booking-controller contains the operations related to bookings for Volcano Island
   * POST /api/bookings (Create a booking)

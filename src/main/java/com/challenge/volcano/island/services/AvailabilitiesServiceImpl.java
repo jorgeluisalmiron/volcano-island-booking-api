@@ -1,6 +1,6 @@
 package com.challenge.volcano.island.services;
 
-import com.challenge.volcano.island.controllers.request.AvailabilitiesResponse;
+import com.challenge.volcano.island.controllers.response.AvailabilitiesResponse;
 import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.model.ChangeAvailabilities;
 import com.challenge.volcano.island.model.DatesByBooking;

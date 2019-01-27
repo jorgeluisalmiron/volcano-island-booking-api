@@ -8,7 +8,6 @@ import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.exceptions.NoAvailabilityException;
 import com.challenge.volcano.island.mappers.BookingMapper;
 import com.challenge.volcano.island.mappers.BookingResponseMapper;
-import com.challenge.volcano.island.mappers.BookingUpdateResponseMapper;
 import com.challenge.volcano.island.model.Booking;
 import com.challenge.volcano.island.model.ChangeAvailabilities;
 import com.challenge.volcano.island.model.Customer;
@@ -58,10 +57,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private BookingResponseMapper bookingResponseMapper;
-
-
-    @Autowired
-    private BookingUpdateResponseMapper bookingUpdateResponseMapper;
 
     @Autowired
     private DatesByBookingRepository datesByBookingRepository;

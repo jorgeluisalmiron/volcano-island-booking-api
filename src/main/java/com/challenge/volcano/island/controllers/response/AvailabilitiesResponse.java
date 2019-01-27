@@ -1,4 +1,4 @@
-package com.challenge.volcano.island.controllers.request;
+package com.challenge.volcano.island.controllers.response;
 
 import lombok.Getter;
 

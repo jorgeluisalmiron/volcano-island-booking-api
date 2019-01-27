@@ -1,4 +1,4 @@
-package com.challenge.volcano.island.controllers.request;
+package com.challenge.volcano.island.controllers.response;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -14,5 +14,6 @@ public class MessageResponse {
     public MessageResponse(String code, String message) {
         this.code = code;
         this.message = message;
+
     }
 }

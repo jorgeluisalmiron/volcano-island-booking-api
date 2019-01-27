@@ -1,7 +1,7 @@
 package com.challenge.volcano.island.controllers;
 
-import com.challenge.volcano.island.controllers.request.AvailabilitiesResponse;
-import com.challenge.volcano.island.controllers.request.MessageResponse;
+import com.challenge.volcano.island.controllers.response.AvailabilitiesResponse;
+import com.challenge.volcano.island.controllers.response.MessageResponse;
 import com.challenge.volcano.island.exceptions.RuleException;
 import com.challenge.volcano.island.services.AvailabilitiesService;
 import io.swagger.annotations.Api;
@@ -31,8 +31,10 @@ public class AvailabilitiesController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get Availabilities for a range within the next 30 days")
-    public ResponseEntity<Object> getAvailabilitiesByRange(@RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                                           @RequestParam(required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
+    public ResponseEntity<Object> getAvailabilitiesByRange(@RequestParam(required = false)
+                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                           @RequestParam(required = false)
+                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
         try{
              AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
              return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
@@ -41,7 +43,8 @@ public class AvailabilitiesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getCode(),e.getMessage()));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new MessageResponse("500", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new MessageResponse("500", e.getMessage()));
         }
     }
 

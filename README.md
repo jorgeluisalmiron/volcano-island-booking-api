@@ -13,9 +13,10 @@ For this API it was used the following:
 
 ## Assumptions and Considerations
 
-- A person can perform a booking indicating for how many persons the booking is. A limit of 10 persons by booking is setted.
-- Only a person who perform a booking must enter his/her personal information. Email, first name and last name are required.
-- The table called **rules** contains some configurable rules to be executed during the bookings transactions. The values of this table are obtained on the app initialization. A change in a rule´s value on database won´t be refreshed on the app, but it could be considered for the future as an enhacement to implement as well as the API services to change the rules. 
+* A person can perform a booking indicating for how many persons the booking is. A limit of 10 persons by booking is setted.
+* Only a person who perform a booking must enter his/her personal information. Email, first name and last name are required.
+* Time Zones are not considered.
+* The table called **rules** contains some configurable rules to be executed during the bookings transactions. The values of this table are obtained on the app initialization. A change in a rule´s value on database won´t be refreshed on the app, but it could be considered for the future as an enhacement to implement as well as the API services to change the rules. 
 
 ## Running the application
 

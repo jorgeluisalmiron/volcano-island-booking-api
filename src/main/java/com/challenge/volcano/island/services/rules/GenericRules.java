@@ -8,12 +8,12 @@ public class GenericRules {
     protected void fromDateRule(LocalDate from) throws RuleException {
         LocalDate now = LocalDate.now();
         if (now.isAfter(from)){
-            throw new RuleException("001","Invalid Arrival Date");
+            throw new RuleException("002","Invalid Arrival Date");
         }
     }
     protected void toDateRule(LocalDate from, LocalDate to) throws RuleException {
         if (!to.isAfter(from)){
-            throw new RuleException("002","Invalid Departure Date");
+            throw new RuleException("003","Invalid Departure Date");
         }
     }
     protected void fromDateRule(LocalDate from,String code, String message) throws RuleException {

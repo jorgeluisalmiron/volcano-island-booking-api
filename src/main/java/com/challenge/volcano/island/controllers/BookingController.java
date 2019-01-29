@@ -4,12 +4,11 @@ import com.challenge.volcano.island.controllers.request.BookingRequest;
 import com.challenge.volcano.island.controllers.request.BookingUpdateRequest;
 import com.challenge.volcano.island.controllers.response.BookingResponse;
 import com.challenge.volcano.island.controllers.response.MessageResponse;
+import com.challenge.volcano.island.controllers.response.OkResponse;
 import com.challenge.volcano.island.controllers.utils.ErrorResponse;
 import com.challenge.volcano.island.exceptions.BookingNotFoundException;
 import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.exceptions.NoAvailabilityException;
-import com.challenge.volcano.island.exceptions.RuleException;
-import com.challenge.volcano.island.model.Booking;
 import com.challenge.volcano.island.services.AvailabilitiesService;
 import com.challenge.volcano.island.services.BookingService;
 import io.swagger.annotations.Api;
@@ -36,84 +35,84 @@ public class BookingController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ApiOperation(value = "Create a booking", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Object> createBooking(@Valid @RequestBody BookingRequest bookingRequest, BindingResult bindingResult) {
+    public ResponseEntity<BookingResponse> createBooking(@Valid @RequestBody BookingRequest bookingRequest, BindingResult bindingResult) {
 
         try {
             if (!bindingResult.hasErrors()) {
                 BookingResponse bookingResponse = bookingService.createBooking(bookingRequest);
                 return ResponseEntity.status(HttpStatus.CREATED).body(bookingResponse);
             } else {
-                return ErrorResponse.generateError(bindingResult);
+                MessageResponse messageResponse = ErrorResponse.generateError(bindingResult);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookingResponse(messageResponse.getCode(),
+                        messageResponse.getMessage()));
+
             }
 
-
         } catch (NoAvailabilityException e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new MessageResponse(e.getCode(), e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookingResponse(e.getCode(), e.getMessage()));
         } catch (CustomException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getCode(), e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookingResponse(e.getCode(), e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new MessageResponse("500", e.getMessage()));
+                    new BookingResponse("500", e.getMessage()));
         }
     }
 
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/{bookingId}", method = RequestMethod.GET, produces = "application/json")
     @ApiOperation(value = "Get a specific booking", produces = "application/json")
-    public ResponseEntity<Object> getBooking(@PathVariable Long id) {
+    public ResponseEntity<BookingResponse> getBooking(@PathVariable("bookingId") Long bookingId) {
 
         try {
-            Booking booking = bookingService.getBooking(id);
-            return ResponseEntity.status(HttpStatus.OK).body(booking);
+             return ResponseEntity.status(HttpStatus.OK).body(bookingService.getBooking(bookingId));
         } catch (BookingNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(e.getCode(), e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BookingResponse(e.getCode(), e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new MessageResponse("500", e.getMessage() + " " + e.getCause().getMessage()));
+                    new BookingResponse("500", e.getMessage()));
         }
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = "application/json", consumes = "application/json")
     @ApiOperation(value = "Update a booking", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<Object> updateBooking(@Valid @RequestBody BookingUpdateRequest bookingUpdateRequest, BindingResult bindingResult) {
+    public ResponseEntity<BookingResponse> updateBooking(@Valid @RequestBody BookingUpdateRequest bookingUpdateRequest, BindingResult bindingResult) {
 
         try {
-
-
             if (!bindingResult.hasErrors()) {
                 BookingResponse bookingResponse = bookingService.updateBooking(bookingUpdateRequest);
                 return ResponseEntity.status(HttpStatus.OK).body(bookingResponse);
             } else {
-                return ErrorResponse.generateError(bindingResult);
+                MessageResponse messageResponse = ErrorResponse.generateError(bindingResult);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookingResponse(messageResponse.getCode(),
+                        messageResponse.getMessage()));
             }
+        } catch (BookingNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new BookingResponse(e.getCode(), e.getMessage()));
+        } catch (NoAvailabilityException e) {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new BookingResponse(e.getCode(), e.getMessage()));
+        } catch (CustomException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new BookingResponse(e.getCode(), e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+                    new BookingResponse("500", e.getMessage()));
+        }
+    }
 
+
+    @RequestMapping(value = "/{bookingId}", method = RequestMethod.DELETE, produces = "application/json")
+    @ApiOperation(value = "Cancel a booking")
+    public ResponseEntity<MessageResponse> delete(@PathVariable("bookingId") Long bookingId) {
+
+        try {
+            bookingService.cancelBooking(bookingId);
+            return ResponseEntity.status(HttpStatus.OK).body(new OkResponse());
         } catch (BookingNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(e.getCode(), e.getMessage()));
-        } catch (NoAvailabilityException e) {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new MessageResponse(e.getCode(), e.getMessage()));
         } catch (CustomException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getCode(), e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
                     new MessageResponse("500", e.getMessage()));
-        }
-    }
-
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = "application/json")
-    @ApiOperation(value = "Cancel a booking")
-    public ResponseEntity<Object> delete(@PathVariable Long id) {
-
-        try {
-            bookingService.cancelBooking(id);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (BookingNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse("1", e.getMessage()));
-        } catch (RuleException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new MessageResponse(e.getCode(), e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new MessageResponse("500", "Error: " + e.getMessage()));
         }
     }
 

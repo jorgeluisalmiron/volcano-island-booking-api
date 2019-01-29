@@ -11,14 +11,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BookingInfo {
-    @NotNull
-    @Future
+    @NotNull(message = "arrivalOn: is required")
+    @Future(message = "arrivalOn: requires a future day")
     private LocalDate arrivalOn;
-    @NotNull
-    @Future
+    @NotNull(message = "departureOn: is required")
+    @Future(message = "departureOn: requires a future day")
     private LocalDate departureOn;
-    @NotNull
-    @Min(1)
+    @NotNull(message = "qtyPersons: is required")
+    @Min(value = 1, message = "qtyPersons: min value is 1")
     private int qtyPersons;
 
 }

@@ -13,10 +13,10 @@ public interface BookingResponseMapper {
     BookingResponseMapper INSTANCE = Mappers.getMapper( BookingResponseMapper.class );
 
     @Mappings({
-            @Mapping(source = "id", target = "bookingId"),
-            @Mapping(source = "arrivalOn", target = "arrivalOn"),
-            @Mapping(source = "departureOn", target = "departureOn"),
-            @Mapping(source = "qtyPersons", target = "qtyPersons")
+            @Mapping(source = "id", target = "bookingInfo.bookingId"),
+            @Mapping(source = "arrivalOn", target = "bookingInfo.arrivalOn"),
+            @Mapping(source = "departureOn", target = "bookingInfo.departureOn"),
+            @Mapping(source = "qtyPersons", target = "bookingInfo.qtyPersons")
     })
     BookingResponse bookingToBookingResponse(Booking booking);
 }

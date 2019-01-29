@@ -1,7 +1,6 @@
 package com.challenge.volcano.island.controllers;
 
 import com.challenge.volcano.island.controllers.response.AvailabilitiesResponse;
-import com.challenge.volcano.island.controllers.response.MessageResponse;
 import com.challenge.volcano.island.exceptions.RuleException;
 import com.challenge.volcano.island.services.AvailabilitiesService;
 import io.swagger.annotations.Api;
@@ -18,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 
-
 @RestController
-@Api(value="onlinebooking", description="Operations pertaining get availabilities for Volcano Island")
+@Api(value = "onlinebooking", description = "Operations pertaining get availabilities for Volcano Island")
 @RequestMapping(value = "/api/availabilities")
 public class AvailabilitiesController {
 
@@ -31,20 +29,18 @@ public class AvailabilitiesController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get Availabilities for a range within the next 30 days")
-    public ResponseEntity<Object> getAvailabilitiesByRange(@RequestParam(required = false)
-                                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                                           @RequestParam(required = false)
-                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to){
-        try{
-             AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
-             return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
-         }
-        catch (RuleException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponse(e.getCode(),e.getMessage()));
-        }
-        catch (Exception e){
+    public ResponseEntity<AvailabilitiesResponse> getAvailabilitiesByRange(@RequestParam(required = false)
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                                    @RequestParam(required = false)
+                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
+        try {
+            AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
+            return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
+        } catch (RuleException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AvailabilitiesResponse(e.getCode(), e.getMessage()));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new MessageResponse("500", e.getMessage()));
+                    new AvailabilitiesResponse("500", e.getMessage()));
         }
     }
 

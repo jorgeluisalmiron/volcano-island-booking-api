@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class BookingRequest extends BookingInfo {
-    @NotNull
+    @NotNull (message = "personalInformation: is requires")
     @Valid
     private PersonalInformation personalInformation;
 }

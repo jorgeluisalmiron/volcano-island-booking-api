@@ -75,7 +75,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponse updateBooking(BookingUpdateRequest bookingUpdateRequest) throws CustomException{
-        Optional<Booking> optionalBooking = bookingRepository.findById(bookingUpdateRequest.getId());
+        Optional<Booking> optionalBooking = bookingRepository.findById(bookingUpdateRequest.getBookingId());
         if (!optionalBooking.isPresent()){
             throw new BookingNotFoundException();
         }
@@ -134,12 +134,13 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public Booking getBooking(Long id) throws CustomException{
+    public BookingResponse getBooking(Long id) throws CustomException{
         Optional<Booking> booking = bookingRepository.findById(id);
         if (!booking.isPresent()){
             throw new BookingNotFoundException();
         }
-        return booking.get();
+        BookingResponse bookingResponse = bookingResponseMapper.bookingToBookingResponse(booking.get());
+        return bookingResponse;
     }
 
     @VisibleForTesting

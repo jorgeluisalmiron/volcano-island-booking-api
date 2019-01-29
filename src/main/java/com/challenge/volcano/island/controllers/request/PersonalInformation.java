@@ -12,16 +12,15 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 public class PersonalInformation {
-    @NotNull
-    @Email(message = "Please provide valid email address")
-    @Size(max=50)
+    @NotNull(message = "email: is required")
+    @Email(message = "email: invalid email address")
     private String email;
-    @NotEmpty(message="first_name is a required field")
-    @Size(max=50)
+    @NotEmpty(message = "firstName: is required")
+    @Size(max=50, message = "firstName: exceed max length of 50")
     @Column(name = "first_name")
     private String firstName;
-    @NotEmpty(message="last_name is a required field")
-    @Size(max=50)
+    @NotEmpty(message = "lastName: is required")
+    @Size(max=50, message = "last_name: exceed max length of 50")
     @Column(name = "last_name")
     private String lastName;
     @Size(max=20)

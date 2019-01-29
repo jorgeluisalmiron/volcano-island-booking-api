@@ -5,11 +5,11 @@
 For this API it was used the following: 
 - Spring Boot
 - H2 Embebed DataBase
-- Swagger 2.x
+- Swagger 
 - JPA
 - Jetty embebed server
-- Maven 3.x
-- Mockito 1.9.5
+- Maven
+- Mockito
 
 ## Assumptions and Considerations
 

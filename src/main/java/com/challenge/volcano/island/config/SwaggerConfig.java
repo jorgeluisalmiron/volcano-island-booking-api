@@ -40,6 +40,7 @@ public class SwaggerConfig {
                 .paths(Predicates.not(PathSelectors.regex("/error.*")))
                 .build()
                 .genericModelSubstitutes(Optional.class)
+                .useDefaultResponseMessages(false)
                 .apiInfo(apiInfo());
     }
 

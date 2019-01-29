@@ -1,7 +1,7 @@
 package com.challenge.volcano.island.services.rules;
 
 import com.challenge.volcano.island.controllers.request.BookingInfo;
-import com.challenge.volcano.island.exceptions.CustomException;
+import com.challenge.volcano.island.exceptions.NoAvailabilityException;
 import com.challenge.volcano.island.exceptions.RuleException;
 import com.challenge.volcano.island.model.Rule;
 import com.challenge.volcano.island.services.AvailabilitiesService;
@@ -24,7 +24,7 @@ public class BookingRulesService extends GenericRules {
     private AvailabilitiesService availabilitiesService;
 
 
-    public void execute(BookingInfo bookingInfo) throws CustomException {
+    public void execute(BookingInfo bookingInfo) throws Exception {
         fromDateRule(bookingInfo.getArrivalOn());
         toDateRule(bookingInfo.getArrivalOn(),bookingInfo.getDepartureOn());
         qtyPersonsRule(bookingInfo.getQtyPersons());
@@ -75,11 +75,11 @@ public class BookingRulesService extends GenericRules {
     }
 
 
-    void availabilityRule(LocalDate arrivalOn, LocalDate departureOn, int qtyPersons) throws RuleException {
+    void availabilityRule(LocalDate arrivalOn, LocalDate departureOn, int qtyPersons) throws NoAvailabilityException {
         long days = DAYS.between(arrivalOn, departureOn);
         boolean fullAvailability = availabilitiesService.checkAvailabilities(arrivalOn, days, qtyPersons);
         if (!fullAvailability){
-            throw new RuleException("102", "No Availabilities");
+            throw new NoAvailabilityException();
         }
 
     }

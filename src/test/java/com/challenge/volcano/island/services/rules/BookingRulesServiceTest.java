@@ -1,6 +1,5 @@
 package com.challenge.volcano.island.services.rules;
 
-import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.model.Rule;
 import com.challenge.volcano.island.services.AvailabilitiesService;
 import org.junit.Before;
@@ -39,8 +38,7 @@ public class BookingRulesServiceTest {
             LocalDate departureOn = LocalDate.now().plus(4, ChronoUnit.DAYS);
             bookingRulesService.stayRule(arrivalOn,departureOn);
             assertTrue(true);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(false);
         }
 
@@ -54,8 +52,7 @@ public class BookingRulesServiceTest {
             LocalDate departureOn = LocalDate.now().plus(5, ChronoUnit.DAYS);
             bookingRulesService.stayRule(arrivalOn,departureOn);
             assertTrue(false);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(true);
         }
 
@@ -69,8 +66,7 @@ public class BookingRulesServiceTest {
             LocalDate departureOn = LocalDate.now().plus(4, ChronoUnit.DAYS);
             bookingRulesService.reservedDaysRule(arrivalOn,departureOn);
             assertTrue(true);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(false);
         }
 
@@ -84,8 +80,7 @@ public class BookingRulesServiceTest {
             LocalDate departureOn = LocalDate.now().plus(32, ChronoUnit.DAYS);
             bookingRulesService.reservedDaysRule(arrivalOn,departureOn);
             assertTrue(false);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(true);
         }
 
@@ -97,8 +92,7 @@ public class BookingRulesServiceTest {
             when(rulesService.getRule("PERSONS_PER_BOOKING_RULE")).thenReturn(getRule(1,10,"PERSONS_PER_BOOKING_RULE"));
             bookingRulesService.qtyPersonsRule(5);
             assertTrue(true);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(false);
         }
 
@@ -110,8 +104,7 @@ public class BookingRulesServiceTest {
             when(rulesService.getRule("PERSONS_PER_BOOKING_RULE")).thenReturn(getRule(1,10,"PERSONS_PER_BOOKING_RULE"));
             bookingRulesService.qtyPersonsRule(15);
             assertTrue(false);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(true);
         }
 
@@ -126,8 +119,7 @@ public class BookingRulesServiceTest {
             when(availabilitiesService.checkAvailabilities(arrivalOn, 3, 1)).thenReturn(true);
             bookingRulesService.availabilityRule(arrivalOn, departureOn, 1);
             assertTrue(true);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(false);
         }
 
@@ -142,8 +134,7 @@ public class BookingRulesServiceTest {
             when(availabilitiesService.checkAvailabilities(arrivalOn, 3, 1)).thenReturn(false);
             bookingRulesService.availabilityRule(arrivalOn, departureOn, 1);
             assertTrue(false);
-        }
-        catch (CustomException e){
+        } catch (Exception e) {
             assertTrue(true);
         }
 

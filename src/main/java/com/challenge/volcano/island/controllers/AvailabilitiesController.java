@@ -1,10 +1,12 @@
 package com.challenge.volcano.island.controllers;
 
 import com.challenge.volcano.island.controllers.response.AvailabilitiesResponse;
-import com.challenge.volcano.island.exceptions.RuleException;
+import com.challenge.volcano.island.controllers.response.ErrorDetails;
 import com.challenge.volcano.island.services.AvailabilitiesService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -29,19 +31,21 @@ public class AvailabilitiesController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "Get Availabilities for a range within the next 30 days")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully"),
+            @ApiResponse(code = 400, message = "Bad request", response = ErrorDetails.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = ErrorDetails.class)
+
+    })
     public ResponseEntity<AvailabilitiesResponse> getAvailabilitiesByRange(@RequestParam(required = false)
-                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
-                                                                    @RequestParam(required = false)
-                                                                    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
-        try {
-            AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
-            return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
-        } catch (RuleException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AvailabilitiesResponse(e.getCode(), e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                    new AvailabilitiesResponse("500", e.getMessage()));
-        }
+                                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+                                                                           @RequestParam(required = false)
+                                                                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to)
+            throws Exception {
+
+        AvailabilitiesResponse availabilitiesResponse = availabilitiesService.getAvailabilities(from, to);
+        return ResponseEntity.status(HttpStatus.OK).body(availabilitiesResponse);
+
     }
 
 }

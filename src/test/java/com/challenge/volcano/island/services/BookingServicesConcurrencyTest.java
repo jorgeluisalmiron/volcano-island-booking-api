@@ -1,6 +1,5 @@
 package com.challenge.volcano.island.services;
 
-import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.model.Booking;
 import com.challenge.volcano.island.model.Customer;
 import com.challenge.volcano.island.repositories.BookingRepository;
@@ -70,10 +69,6 @@ public class BookingServicesConcurrencyTest {
         stressTester.stress(() -> {
             try {
                 concurrentTest();
-                System.out.println(availabilitiesService.getAvailabilitiesCache().get(date.plus(1, ChronoUnit.DAYS)).intValue());
-            } catch (CustomException e) {
-                System.out.println(e.getMessage());
-                errors.add(e.getMessage());
             } catch (Exception e) {
                 errors.add(e.getMessage());
             }
@@ -96,7 +91,7 @@ public class BookingServicesConcurrencyTest {
            Updates: 20% (with a previous query)
            Queries: 30% (several queries)
      */
-    private void concurrentTest() throws CustomException, InterruptedException {
+     private void concurrentTest() throws Exception {
 
         int value = (int) (Math.random() * 10);
         long days = 1 + (long) (Math.random() * 31);
@@ -104,7 +99,7 @@ public class BookingServicesConcurrencyTest {
 
         //New Bookings 40%
         if (value <= 3) {
-            System.out.println("New Bookings");
+            System.out.println("Performing New Booking");
             Thread.sleep((long) (Math.random() * 100));
             long departureDayOffset = days > 4 ? days : 4;
             LocalDate arrivalOn = LocalDate.now().plus(departureDayOffset - 3, ChronoUnit.DAYS);
@@ -118,7 +113,7 @@ public class BookingServicesConcurrencyTest {
 
         //Cancellations 10%
         if (value == 4) {
-            System.out.println("Cancellations");
+            System.out.println("Performing Cancellation");
             if (!stackBookings.isEmpty()) {
                 Thread.sleep((long) (Math.random() * 100));
                 bookingService.performCancel(popBooking());
@@ -127,7 +122,7 @@ public class BookingServicesConcurrencyTest {
         }
         //Updates 20%
         if ((value >= 5) || (value <= 6)) {
-            System.out.println("Updates");
+            System.out.println("Performing Update");
             if (!stackBookings.isEmpty()) {
                 Thread.sleep((long) (Math.random() * 100));
                 long departureDayOffset = days > 4 ? days : 4;
@@ -144,7 +139,7 @@ public class BookingServicesConcurrencyTest {
         }
         //Queries 30%
         if ((value > 6)) {
-            System.out.println("Queries");
+            System.out.println("Performing Queries");
             Thread.sleep((long) (Math.random() * 100));
             LocalDate date = LocalDate.now();
             long departureDayOffset = days > 4 ? days : 4;

@@ -3,16 +3,14 @@ package com.challenge.volcano.island.controllers.response;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
-public class BookingResponse extends MessageResponse {
-    private BookingInfoResponse bookingInfo;
+public class BookingResponse {
+    private Long bookingId;
+    private LocalDate arrivalOn;
+    private LocalDate departureOn;
+    private int qtyPersons;
 
-    public BookingResponse(){
-        super("000","Success");
-    }
-
-    public BookingResponse(String code, String message){
-        super(code,message);
-    }
 }

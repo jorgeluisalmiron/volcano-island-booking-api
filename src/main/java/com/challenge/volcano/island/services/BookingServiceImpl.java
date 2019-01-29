@@ -4,7 +4,6 @@ import com.challenge.volcano.island.controllers.request.BookingRequest;
 import com.challenge.volcano.island.controllers.request.BookingUpdateRequest;
 import com.challenge.volcano.island.controllers.response.BookingResponse;
 import com.challenge.volcano.island.exceptions.BookingNotFoundException;
-import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.exceptions.NoAvailabilityException;
 import com.challenge.volcano.island.mappers.BookingMapper;
 import com.challenge.volcano.island.mappers.BookingResponseMapper;
@@ -74,7 +73,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public BookingResponse updateBooking(BookingUpdateRequest bookingUpdateRequest) throws CustomException{
+    public BookingResponse updateBooking(BookingUpdateRequest bookingUpdateRequest) throws Exception {
         Optional<Booking> optionalBooking = bookingRepository.findById(bookingUpdateRequest.getBookingId());
         if (!optionalBooking.isPresent()){
             throw new BookingNotFoundException();
@@ -122,7 +121,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void cancelBooking(Long id) throws CustomException {
+    public void cancelBooking(Long id) throws Exception {
         Optional<Booking> booking = bookingRepository.findById(id);
         if (!booking.isPresent()){
             throw new BookingNotFoundException();
@@ -134,7 +133,7 @@ public class BookingServiceImpl implements BookingService {
 
 
     @Override
-    public BookingResponse getBooking(Long id) throws CustomException{
+    public BookingResponse getBooking(Long id) throws Exception {
         Optional<Booking> booking = bookingRepository.findById(id);
         if (!booking.isPresent()){
             throw new BookingNotFoundException();
@@ -158,7 +157,7 @@ public class BookingServiceImpl implements BookingService {
 
     @VisibleForTesting
     protected Booking performBooking(Customer customer, LocalDate arrivalOn, LocalDate departureOn, int qtyPersons)
-            throws CustomException {
+            throws Exception {
         Booking booking = new Booking();
         booking.setQtyPersons(qtyPersons);
         booking.setArrivalOn(arrivalOn);

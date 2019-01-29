@@ -1,7 +1,6 @@
 package com.challenge.volcano.island.services;
 
 import com.challenge.volcano.island.controllers.response.AvailabilitiesResponse;
-import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.model.ChangeAvailabilities;
 import com.challenge.volcano.island.model.DatesByBooking;
 import com.challenge.volcano.island.repositories.DatesByBookingRepository;
@@ -40,7 +39,7 @@ public class AvailabilitiesServiceImpl implements AvailabilitiesService {
     private int availabilitiesMaxDays;
 
     @Override
-    public AvailabilitiesResponse getAvailabilities(LocalDate from, LocalDate to) throws CustomException {
+    public AvailabilitiesResponse getAvailabilities(LocalDate from, LocalDate to) throws Exception {
         Map<LocalDate, Integer> responseMap;
         if (Objects.isNull(from) && Objects.isNull(to)) {
             responseMap = getAvailabilitiesCache();

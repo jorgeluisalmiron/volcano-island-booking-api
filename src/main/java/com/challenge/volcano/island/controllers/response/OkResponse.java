@@ -5,6 +5,6 @@ import lombok.Getter;
 @Getter
 public class OkResponse extends MessageResponse {
     public OkResponse(){
-        super("000","Success");
+        super("200", "Success");
     }
 }

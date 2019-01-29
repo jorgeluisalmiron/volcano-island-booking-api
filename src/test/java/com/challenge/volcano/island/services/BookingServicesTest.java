@@ -1,7 +1,6 @@
 package com.challenge.volcano.island.services;
 
 
-import com.challenge.volcano.island.exceptions.CustomException;
 import com.challenge.volcano.island.exceptions.NoAvailabilityException;
 import com.challenge.volcano.island.model.Booking;
 import com.challenge.volcano.island.model.Customer;
@@ -72,7 +71,7 @@ public class BookingServicesTest {
                 assertEquals(availabilitiesService.getAvailabilitiesCache().get(date.plus(i, ChronoUnit.DAYS)).intValue(),
                         MAX_PERSONS - qtyPersons);
             }
-        } catch (CustomException e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
@@ -94,7 +93,7 @@ public class BookingServicesTest {
             for (int i = 1; i <= days; i++) {
                 assertEquals(availabilitiesService.getAvailabilitiesCache().get(date.plus(i, ChronoUnit.DAYS)).intValue(), MAX_PERSONS);
             }
-        } catch (CustomException e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }
@@ -133,7 +132,7 @@ public class BookingServicesTest {
 
         } catch (NoAvailabilityException e) {
             assertTrue(false);
-        } catch (CustomException e) {
+        } catch (Exception e) {
             assertTrue(false);
         }
     }

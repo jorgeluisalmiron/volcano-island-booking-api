@@ -17,7 +17,7 @@ spring:
 
 volcano:
   default:
-    max-persons-per-day: 10
+    max-persons-per-day: 100
     availabilities-max-days: 30
     persons-per-booking:
       min: 1

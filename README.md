@@ -13,9 +13,9 @@ For this API it was used the following:
 
 ## Assumptions and Considerations
 
-* It was defined the maximum availability per day of 100 persons. 
 * A person can perform a booking indicating for how many persons the booking is. A limit of 10 persons by booking is setted.
 * Only a person who perform a booking must enter his/her personal information. Email, first name and last name are required.
+* It was defined the maximum availability per day of 100 persons. This configuration is in the application.yml.
 * Time Zones are not considered.
 * The table called **rules** contains some configurable rules to be executed during the bookings transactions. The values of this table are obtained on the app initialization. A change in a rule´s value on database won´t be refreshed on the app, but it could be considered for the future as an enhacement to implement as well as the API services to change the rules. 
 

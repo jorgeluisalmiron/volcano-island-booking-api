@@ -13,6 +13,7 @@ For this API it was used the following:
 
 ## Assumptions and Considerations
 
+* It was defined the maximum availability per day of 100 persons. 
 * A person can perform a booking indicating for how many persons the booking is. A limit of 10 persons by booking is setted.
 * Only a person who perform a booking must enter his/her personal information. Email, first name and last name are required.
 * Time Zones are not considered.
